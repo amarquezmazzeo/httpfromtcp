@@ -35,7 +35,10 @@ func getLinesChannel(file io.ReadCloser) <-chan string {
 			line += parts[len(parts)-1]
 		}
 		close(ch)
-		file.Close()
+		err := file.Close()
+		if err != nil {
+			log.Fatalf("error closing the file: %v\n", err)
+		}
 	}()
 
 	return ch
